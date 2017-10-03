@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-import ObjectDBV
+from ObjectDBV import ObjectDBV
 from ConfigDBV import conf
 
 class RoleDBV(ObjectDBV):
@@ -11,6 +11,8 @@ class RoleDBV(ObjectDBV):
 
     def move(self):
         delta_x, delta_y = self.motionDetection()
+        #print("*************************************")
+        #print(delta_x, delta_y)
         self.x = self.x + delta_x
         self.y = self.y + delta_y
 
@@ -31,7 +33,7 @@ class RoleDBV(ObjectDBV):
         else:
             self.location.y = y_tmp
 
-        if self.x_step == len(self.x_img):
+        if self.x_step == len(self.x_img) - 1:
             self.x_step = 0
         else:
             self.x_step = self.x_step + 1

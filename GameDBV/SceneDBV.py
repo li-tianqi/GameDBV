@@ -7,11 +7,12 @@ class SceneDBV(object):
         self.roles = []
         self.objects = []
 
-        self.width = self.map.width
-        self.height = self.map.height
+
 
     def loadMap(self, map):
         self.map = map
+        self.width = self.map.width
+        self.height = self.map.height
 
     def addRole(self, role):
         self.roles.append(role)

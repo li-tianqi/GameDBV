@@ -13,7 +13,11 @@ class ConfigDBV(object):
     def __init__(self):
         self.screen_width = 800
         self.screen_height = 600
-        
+        self.screen_x = 100
+        self.screen_y = 100
+        self.title = "GameDBV v0.1"
+
+
         self.Direction = Enum('Direction', ('E','W','S','N','SE','SW','NE','NW'))
         
         self.motion_detection_range_X = 2

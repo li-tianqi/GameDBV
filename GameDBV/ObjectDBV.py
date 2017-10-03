@@ -24,6 +24,8 @@ class ObjectDBV(object):
         self.y_img = {}    # 动画帧的y坐标, 用方向控制
         self.x_step = 0    # 范围可通过len(x_img)控制
         self.x_img = [0]    # 动画帧的x坐标, 用step控制
+        
+        self.on_move = False
 
 
     def setSize(self, width, height):
@@ -33,10 +35,11 @@ class ObjectDBV(object):
 
     def setFrameY(self, Y_list):
         # 设置动画帧
-        i = 0
+        i = -1
         for member in conf.Direction:
+            i = i + 1
             self.y_img[member] = Y_list[i]
-            ++i
+
     
     def setFrameX(self, X_list):
         self.x_img = X_list
@@ -46,7 +49,7 @@ class ObjectDBV(object):
         self.location = map
 
     def setCoordinate(self, new_x, new_y):
-        if (new_x < 0 or new_x > self.location.x - self.width or new_y < 0 or new_y > self.location.y - self.height):
+        if (new_x < 0 or new_x > self.location.width - self.width or new_y < 0 or new_y > self.location.height - self.height):
             raise ValueError("the coordinate in 'ObjectDBV.setCoordinate()' out of range")
         else:
             self.x = new_x
@@ -66,10 +69,13 @@ class ObjectDBV(object):
         self.x = self.x + delta_x
         self.y = self.y + delta_y
 
-        if self.x_step == len(self.x_img):
+        #print(self.x_step)
+        if self.x_step >= (len(self.x_img) - 1):
             self.x_step = 0
         else:
             self.x_step = self.x_step + 1
+
+            #print("**********", self.x_step)
 
 
 
@@ -149,8 +155,13 @@ class ObjectDBV(object):
             delta = self.location.x - self.x
             x_image = self.x_img[self.x_step] + delta
             w = self.width - delta
+            if w < 0:
+                return
         else:
             x_screen = self.x - self.location.x
+            #print(self.x_step)
+            #print(self.x_img)
+            #print(len(self.x_img))
             x_image = self.x_img[self.x_step]
             w = self.width
 
@@ -159,6 +170,8 @@ class ObjectDBV(object):
             delta = self.location.y - self.y
             y_image = self.y_img[self.dir] + delta
             h = self.height - delta
+            if h < 0:
+                return
         else:
             y_screen = self.y - self.location.y
             y_image = self.y_img[self.dir]
